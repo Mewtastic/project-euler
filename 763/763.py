@@ -1,4 +1,4 @@
-divisions = 0
+divisions = 10000
 
 while divisions == 0:
     divisions = input("Enter Amoeaba Divisions (INT): ")
@@ -10,29 +10,37 @@ while divisions == 0:
 
 amoebas = 2*divisions+1
 
-petri_dish = [[0,0,0]]
+class PetriDish:
+    def __init__(self, culture):
+        self.culture = culture
+        self.steps = []
 
-def valid_division(amoeba, divide):
-    x = [amoeba[0]+1, amoeba[1], amoeba[2]]
-    y = [amoeba[0], amoeba[1]+1, amoeba[2]]
-    z = [amoeba[0], amoeba[1], amoeba[2]+1]
+    def reproduce(self, amoeba, index):
+        x = (amoeba[0]+1, amoeba[1], amoeba[2])
+        y = (amoeba[0], amoeba[1]+1, amoeba[2])
+        z = (amoeba[0], amoeba[1], amoeba[2]+1)
 
-    if x in petri_dish:
-        valid = False
-    elif y in petri_dish: 
-        valid = False
-    elif z in petri_dish:
-        valid = False
-    else: # Valid division found
-        valid = True
+        if x in self.culture:
+            valid = False
+        elif y in self.culture: 
+            valid = False
+        elif z in self.culture:
+            valid = False
+        else: # Valid division found
+            valid = True
+            self.culture.append(x)
+            self.culture.append(y)
+            self.culture.append(z)
+            self.steps.append(self.culture.pop(index))
 
-        if divide: # Only divide if a valid division is found
-            petri_dish.append(x)
-            petri_dish.append(y)
-            petri_dish.append(z)
-
-            petri_dish.remove(amoeba)
-
-    return valid
 
 print("Total Amoebas: " + str(amoebas))
+
+petri_dish = PetriDish([(0,0,0)])
+idx = 0
+while len(petri_dish.culture) < amoebas:
+    petri_dish.reproduce(petri_dish.culture[idx], idx)
+    idx +=1
+    if idx > len(petri_dish.culture):idx=0
+
+print("Amoebas Simulated: " + str(len(petri_dish.culture)))
