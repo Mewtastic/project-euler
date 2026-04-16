@@ -1,1 +1,16 @@
-Create a rudimentary algorithm to get all possible arrangements at a given number of divisions.
+1.)Optimize the base case of the algorithm even further. It should be at least 10 times faster.
+    (From 2.7 seconds to .2xxx seconds)
+    (10 times speed up 
+2.)See if we can't easily find a good number of unique dish arrangements from a completed dish
+    If we can do some simple calculations to find  unique solutions then that reduces computation
+    several times and could save several minutes if not hours.
+3.)Thread across my 32 cpu threads. (Give each thread a unique petri_dish to work on.)
+    (Threading a single petri dish just introduces logical errors and will slow down the computation)
+    (This could reduce computation time by 10 to 30 times!)
+
+Even after all these optimizations my estimated run time is a few hundred hours :/
+
+New list
+1- Switch to a non recursive method of solving. Easier to add additional logic and to multithread
+2- np.remove() appears to be responsible for some issues in the calculations on 5 and up. Why?
+3- Make sure we can detect duplicates in a memory effecient manner and stop future calculations using duplicates.
